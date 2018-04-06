@@ -11,7 +11,7 @@ class ActivityTest < Minitest::Test
 
   def test_activity_type
     activity = Activity.new("hiking")
-    assert_equal "hiking", activity.type
+    assert_equal ["hiking"], activity.type
   end
 
   def test_add_participants
@@ -24,15 +24,23 @@ class ActivityTest < Minitest::Test
     assert_equal expected, activity.participants
   end
 
+  def test_activity_cost
+    activity = Activity.new("hiking")
+    activity.add_cost("hiking", 20)
+    assert_equal 20, activity.cost
+  end
 
+  def test_split_cost
+    activity = Activity.new("hiking")
+    assert_equal 5, activity.split_cost
+  end
 end
 
-# iteration 1: Creating Activities
+# Iteration 2: Activity Calculations
 #
-# Add to the existing Activity class so that it supports the following functionality.
+# Add to the Activity class so that it supports the following functionality. Note, it is assumed that the cost of each activity is split evenly between all participants.
 #
-# An Activity has a name, such as 'hiking'
-# An Activity has participants
-# participants are represented with a hash and have a name and an amount they've paid for that activity
-# You can add participants to an Activity
-# You can evaluate the total cost of an activity
+# You can split the cost of an activity
+# You can evaluate out how much each person is owed/owes
+# If a participant paid less than their fair share they owe a positive amount.
+# If a participant paid more than their fair share they owe a negative amount (meaning they are owed money).
